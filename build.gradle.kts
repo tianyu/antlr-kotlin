@@ -11,6 +11,11 @@ buildscript {
     }
 }
 
+plugins {
+    `maven-publish`
+    signing
+}
+
 allprojects {
     group = "com.strumenta.antlr-kotlin"
     version = "0.0.4"
