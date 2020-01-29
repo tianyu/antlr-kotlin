@@ -7,4 +7,3 @@ build
 out
 **/.DS_Store
 .java-version
-**/generated-src

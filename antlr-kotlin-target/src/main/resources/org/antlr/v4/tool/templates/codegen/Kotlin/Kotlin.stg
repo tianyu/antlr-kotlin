@@ -299,7 +299,7 @@ class <parser.name>(input: TokenStream) : <superClass; null="Parser">(input) {
 <if(sempredFuncs)>
 	override fun sempred(_localctx: RuleContext?, ruleIndex: Int, predIndex: Int) : Boolean {
 		when (ruleIndex) {
-		<parser.sempredFuncs.values:{f| <f.ruleIndex> -> return <f.name>_sempred(_localctx, predIndex)}; separator="\n">
+		<parser.sempredFuncs.values:{f| <f.ruleIndex> -> return <f.name>_sempred(_localctx as <f.ctxType>, predIndex)}; separator="\n">
 		}
 		return true
 	}
@@ -330,7 +330,7 @@ fun action(RuleContext _localctx, int ruleIndex, int actionIndex) {
 override fun sempred(_localctx: RuleContext?, ruleIndex: Int, predIndex: Int) : Boolean {
 	when (ruleIndex) {
 	<recog.sempredFuncs.values:{f|
-<f.ruleIndex> -> return <f.name>_sempred(_localctx, predIndex)}; separator="\n">
+<f.ruleIndex> -> return <f.name>_sempred(_localctx as <f.ctxType>, predIndex)}; separator="\n">
 	}
 	return true
 }
