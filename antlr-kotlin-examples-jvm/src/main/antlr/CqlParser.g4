@@ -188,7 +188,7 @@ codeBlock
    ;
 
 paramList
-   : _param (syntaxComma _param)*
+   : param_ (syntaxComma param_)*
    ;
 
 returnMode
@@ -851,7 +851,7 @@ hashKey
    : OBJECT_NAME
    ;
 
-_param
+param_
    : paramName dataType
    ;
 
