@@ -21,15 +21,28 @@ public class KotlinTarget extends Target {
 	 */
 	private static final ThreadLocal<STGroup> targetTemplates = new ThreadLocal<STGroup>();
 
+	// see https://kotlinlang.org/docs/reference/keyword-reference.html
 	protected static final String[] kotlinKeywords = {
-		"abstract", "catch",
-		"class", "const", "else",
-		"enum",  "false", "for",
-		"if", "implements", "import", "is", "interface",
-		"null", "package", "private", "internal",
-		"public", "return",
-		"this", "throw", "true", "try",
-		"while", "object"
+		"abstract", "actual", "annotation", "as", 
+		"break", "by",
+		"catch", "class", "companion", "const", "constructor", "crossinline",
+		"continue",
+		"data", "delegate", "do", "dynamic",
+		"enum", "else", "expect", "external",
+		"false", "field", "file", "final", "finally", "for", "fun",
+		"get",
+		"if", "import", "in", "infix", "init", "inner", "inline", "interface", "internal", "is", "it",
+		"lateinit",
+		"noinline", "null",
+		"object", "open", "operator", "out", "override", 
+		"package", "param", "private", "property", "protected", "public",
+		"receiver", "reified", "return",
+		"sealed", "set", "setparam", "super", "suspend",
+		"tailrec", "this", "throw", "true", "try", "typealias","typeof",
+		"val", "var", "vararg",
+		"when", "where", "while",
+		
+		"Byte", "Char", "Double", "Float", "Int", "Long", "Short", "String"
 	};
 
 	/** Avoid grammar symbols in this set to prevent conflicts in gen'd code. */
