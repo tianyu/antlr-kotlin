@@ -54,7 +54,7 @@ repositories {
 }
 
 plugins {
-    kotlin("jvm") version "1.7.21"
+    kotlin("jvm") version "1.8.10"
     // do not add the plugin here, it contains only a task
     //id("com.strumenta.antlr-kotlin") version "0.0.5"
 }
@@ -63,28 +63,24 @@ plugins {
 // starting from verison 0.0.5, you have to apply it manually:
 tasks.register<com.strumenta.antlrkotlin.gradleplugin.AntlrKotlinTask>("generateKotlinGrammarSource") {
     // the classpath used to run antlr code generation
-    antlrClasspath = configurations.detachedConfiguration(
+    antlrClasspathDependencies(
             // antlr itself
             // antlr is transitive added by antlr-kotlin-target,
             // add another dependency if you want to choose another antlr4 version (not recommended)
-            // project.dependencies.create("org.antlr:antlr4:$antlrVersion"),
+            // "org.antlr:antlr4:$antlrVersion",
 
             // antlr target, required to create kotlin code
-            project.dependencies.create("$groupProperty:antlr-kotlin-target:$antlrKotlinVersion")
+            "$groupProperty:antlr-kotlin-target:$antlrKotlinVersion"
     )
     maxHeapSize = "64m"
     packageName = "com.strumenta.antlrkotlin.examples"
     arguments = listOf("-no-visitor", "-no-listener")
-    source = project.objects
-            .sourceDirectorySet("antlr", "antlr")
-            .srcDir("src/main/antlr").apply {
-                include("*.g4")
-            }
+    sourceDirectory.set(file("src/main/antlr"))
     // outputDirectory is required, put it into the build directory
     // if you do not want to add the generated sources to version control
     //outputDirectory = File("build/generated-src/antlr/main")
     // use this settings if you want to add the generated sources to version control
-    outputDirectory = File("src/main/kotlin-antlr")
+    outputDirectory.set(file("src/main/kotlin-antlr"))
 }
 
 // run generate task before build
@@ -105,12 +101,11 @@ configure<SourceSetContainer> {
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
     implementation(kotlin("reflect"))
-    testImplementation(kotlin("test-junit5"))
+    testImplementation(kotlin("test"))
     // add antlr-kotlin-runtime-jvm
     // otherwise, the generated sources will not compile
     implementation("$groupProperty:antlr-kotlin-runtime-jvm:$antlrKotlinVersion")
 }
 
-// to allow -x jsIrBrowserTest -x jsLegacyBrowserTest, see .ci.sh
-tasks.register("jsIrBrowserTest")
-tasks.register("jsLegacyBrowserTest")
+// to allow -x jsBrowserTest, see .ci.sh
+tasks.register("jsBrowserTest")

@@ -1,4 +1,12 @@
 // Generated from java-escape by ANTLR 4.7.1
+@file:Suppress(
+  "ASSIGNED_BUT_NEVER_ACCESSED_VARIABLE",
+  "SENSELESS_COMPARISON",
+  "UNUSED_PARAMETER",
+  "UNUSED_VALUE",
+  "USELESS_CAST",
+)
+
 package com.strumenta.antlrkotlin.examples;
 import com.strumenta.kotlinmultiplatform.asCharArray
 import com.strumenta.kotlinmultiplatform.getType

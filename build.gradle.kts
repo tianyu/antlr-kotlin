@@ -1,5 +1,5 @@
 buildscript {
-    val kotlinVersion = "1.7.21"
+    val kotlinVersion = "1.8.10"
 
     repositories {
         mavenLocal()
@@ -34,9 +34,13 @@ allprojects {
     version = versionProperty
     group = groupProperty
 
+    afterEvaluate {
+        extensions.findByType<JavaPluginExtension>()?.apply {
+            toolchain.languageVersion.set(JavaLanguageVersion.of(8))
+        }
+    }
+
     tasks.withType<JavaCompile> {
-        sourceCompatibility = "1.8"
-        targetCompatibility = "1.8"
         options.compilerArgs.add("-Xlint:all")
         options.isDeprecation = true
     }
@@ -49,7 +53,7 @@ allprojects {
     }
 }
 
-tasks.withType<Wrapper> {
-    gradleVersion = "7.5.1"
+tasks.wrapper {
+    gradleVersion = "8.0.2"
     distributionType = Wrapper.DistributionType.ALL
 }

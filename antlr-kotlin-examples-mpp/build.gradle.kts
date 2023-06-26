@@ -59,6 +59,30 @@ plugins {
     //id("com.strumenta.antlr-kotlin") version "0.0.5"
 }
 
+// in antlr-kotlin-plugin <0.0.5, the configuration was applied by the plugin.
+// starting from verison 0.0.5, you have to apply it manually:
+val generateKotlinCommonGrammarSource by tasks.creating(com.strumenta.antlrkotlin.gradleplugin.AntlrKotlinTask::class) {
+    // the classpath used to run antlr code generation
+    antlrClasspathDependencies(
+        // antlr itself
+        // antlr is transitive added by antlr-kotlin-target,
+        // add another dependency if you want to choose another antlr4 version (not recommended)
+        // "org.antlr:antlr4:$antlrVersion",
+
+        // antlr target, required to create kotlin code
+        "$groupProperty:antlr-kotlin-target:$antlrKotlinVersion"
+    )
+    maxHeapSize = "64m"
+    packageName = "com.strumenta.antlrkotlin.examples"
+    arguments = listOf("-no-visitor", "-no-listener")
+    sourceDirectory.set(file("src/commonAntlr/antlr"))
+    // outputDirectory is required, put it into the build directory
+    // if you do not want to add the generated sources to version control
+    outputDirectory.set(file("build/generated-src/commonAntlr/kotlin"))
+    // use this settings if you want to add the generated sources to version control
+    // outputDirectory = File("src/commonAntlr/kotlin")
+}
+
 kotlin {
     jvm()
 
@@ -74,7 +98,7 @@ kotlin {
             // you have to add the generated sources the to the kotlin compiler source directory list
             // this is not required if you use src/commonAntlr/kotlin
             // and want to add the generated sources to version control
-            kotlin.srcDir("build/generated-src/commonAntlr/kotlin")
+            kotlin.srcDir(generateKotlinCommonGrammarSource)
         }
 
         val commonMain by getting {
@@ -90,38 +114,10 @@ kotlin {
 
         val jvmTest by getting {
             dependencies {
-                api(kotlin("test-junit5"))
+                api(kotlin("test"))
             }
         }
     }
-}
-
-// in antlr-kotlin-plugin <0.0.5, the configuration was applied by the plugin.
-// starting from verison 0.0.5, you have to apply it manually:
-tasks.register<com.strumenta.antlrkotlin.gradleplugin.AntlrKotlinTask>("generateKotlinCommonGrammarSource") {
-    // the classpath used to run antlr code generation
-    antlrClasspath = configurations.detachedConfiguration(
-            // antlr itself
-            // antlr is transitive added by antlr-kotlin-target,
-            // add another dependency if you want to choose another antlr4 version (not recommended)
-            // project.dependencies.create("org.antlr:antlr4:$antlrVersion"),
-
-            // antlr target, required to create kotlin code
-            project.dependencies.create("$groupProperty:antlr-kotlin-target:$antlrKotlinVersion")
-    )
-    maxHeapSize = "64m"
-    packageName = "com.strumenta.antlrkotlin.examples"
-    arguments = listOf("-no-visitor", "-no-listener")
-    source = project.objects
-            .sourceDirectorySet("antlr", "antlr")
-            .srcDir("src/commonAntlr/antlr").apply {
-                include("*.g4")
-            }
-    // outputDirectory is required, put it into the build directory
-    // if you do not want to add the generated sources to version control
-    outputDirectory = File("build/generated-src/commonAntlr/kotlin")
-    // use this settings if you want to add the generated sources to version control
-    // outputDirectory = File("src/commonAntlr/kotlin")
 }
 
 // run generate task before build
@@ -129,6 +125,5 @@ tasks.register<com.strumenta.antlrkotlin.gradleplugin.AntlrKotlinTask>("generate
 // you can call the task manually in this case to update the generated sources
 tasks.getByName("compileKotlinJvm").dependsOn("generateKotlinCommonGrammarSource")
 
-// to allow -x jsIrBrowserTest -x jsLegacyBrowserTest, see .ci.sh
-tasks.register("jsIrBrowserTest")
-tasks.register("jsLegacyBrowserTest")
+// to allow -x jsBrowserTest, see .ci.sh
+tasks.register("jsBrowserTest")

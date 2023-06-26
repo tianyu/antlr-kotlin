@@ -5,6 +5,7 @@ build
 **/*.iws
 .idea
 out
+gen
 **/.DS_Store
 .java-version
 /kotlin-js-store

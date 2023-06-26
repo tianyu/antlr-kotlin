@@ -1,4 +1,12 @@
 // Generated from java-escape by ANTLR 4.7.1
+@file:Suppress(
+  "ASSIGNED_BUT_NEVER_ACCESSED_VARIABLE",
+  "SENSELESS_COMPARISON",
+  "UNUSED_PARAMETER",
+  "UNUSED_VALUE",
+  "USELESS_CAST",
+)
+
 package com.strumenta.antlrkotlin.examples;
 import com.strumenta.kotlinmultiplatform.asCharArray
 import com.strumenta.kotlinmultiplatform.getType
@@ -859,9 +867,9 @@ class MiniCalcParser(input: TokenStream) : Parser(input) {
 		return _localctx
 	}
 
-	override fun sempred(_localctx: RuleContext?, ruleIndex: Int, predIndex: Int) : Boolean {
+	override fun sempred(_localctx: RuleContext?, ruleIndex: Int, actionIndex: Int) : Boolean {
 		when (ruleIndex) {
-		7 -> return expression_sempred(_localctx as ExpressionContext, predIndex)
+		7 -> return expression_sempred(_localctx as ExpressionContext, actionIndex)
 		}
 		return true
 	}

@@ -1,4 +1,6 @@
 // Generated from java-escape by ANTLR 4.7.1
+@file:Suppress("unused", "UNCHECKED_CAST")
+
 package com.strumenta.antlrkotlin.examples
 
 import com.strumenta.kotlinmultiplatform.asCharArray

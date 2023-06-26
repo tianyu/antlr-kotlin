@@ -1,5 +1,6 @@
 plugins {
     id("org.jetbrains.kotlin.multiplatform")
+    `maven-publish`
 }
 
 repositories {
@@ -7,46 +8,30 @@ repositories {
     mavenLocal()
 }
 
-apply(plugin = "maven-publish")
-
 kotlin {
     jvm()
-    js(BOTH) {
-        browser {
-        }
-        nodejs {
-        }
+    js(IR) {
+        browser()
+        nodejs()
     }
 
     ios("ios") {
-        binaries {
-            staticLib()
-        }
+        binaries.staticLib()
     }
     linuxArm64 {
-        binaries {
-            staticLib()
-        }
+        binaries.staticLib()
     }
     linuxX64 {
-        binaries {
-            staticLib()
-        }
+        binaries.staticLib()
     }
     macosArm64 {
-        binaries {
-            staticLib()
-        }
+        binaries.staticLib()
     }
     macosX64 {
-        binaries {
-            staticLib()
-        }
+        binaries.staticLib()
     }
     mingwX64("windows") {
-        binaries {
-            staticLib()
-        }
+        binaries.staticLib()
     }
     sourceSets {
         commonMain {

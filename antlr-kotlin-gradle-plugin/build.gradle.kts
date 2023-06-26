@@ -1,11 +1,11 @@
 plugins {
     `java-library`
     `maven-publish`
+    `kotlin-dsl`
 }
 
 dependencies {
     implementation("org.antlr:antlr4:${Versions.antlr}")
-    implementation(gradleApi())
     implementation(project(":antlr-kotlin-target"))
 }
 
